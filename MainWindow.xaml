@@ -1,0 +1,109 @@
+﻿<Window x:Class="GreedyVisualizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Greedy Algorithm Optimization" SizeToContent="Height" Width="1000" Background="#0D0D11">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Greedy Algorithm Optimization" Foreground="White" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="0">
+                <TextBlock Text="Unoptimized Greedy (O(n²))" Foreground="#FF4C4C" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                <ItemsControl x:Name="UnoptimizedCanvas" Width="400" Height="400">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Image}" Width="{Binding Width}" Height="400"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding XPosition}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ItemsControl>
+                <TextBlock x:Name="UnoptimizedCounterText" Text="Total Operasi: 0" Foreground="#FF4C4C" FontSize="16" FontWeight="Bold" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="2">
+                <TextBlock Text="Optimized Greedy (O(n log n))" Foreground="#4CFF4C" FontSize="18" HorizontalAlignment="Center" Margin="0,0,0,10"/>
+                <ItemsControl x:Name="OptimizedCanvas" Width="400" Height="400">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Image Source="{Binding Image}" Width="{Binding Width}" Height="400"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding XPosition}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+                </ItemsControl>
+                <TextBlock x:Name="OptimizedCounterText" Text="Total Operasi: 0" Foreground="#4CFF4C" FontSize="16" FontWeight="Bold" Margin="0,10,0,0" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Grid>
+
+        <Button Grid.Row="2" Content="Restart Sorting" Background="#7AA2F7" Foreground="#16161E" FontSize="16" FontWeight="Bold" Padding="20,10" Margin="0,15,0,0" HorizontalAlignment="Center" Click="RestartButton_Click" Cursor="Hand" BorderThickness="0"/>
+
+        <Grid Grid.Row="3" Margin="0,15,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Border Grid.Column="0" Background="#16161E" CornerRadius="10" Padding="15">
+                <TextBlock FontFamily="Consolas" Foreground="#A9B1D6" FontSize="13" TextWrapping="Wrap">
+                    <Run Foreground="#F7768E">function</Run> <Run Foreground="#7AA2F7">greedyStandard</Run>(C : himpunan_kandidat)<LineBreak/>
+                    <Run Foreground="#565F89">// Seleksi dilakukan berulang (Linear Search)</Run><LineBreak/>
+                    S &lt;- {}  <Run Foreground="#565F89">// Inisialisasi himpunan solusi</Run><LineBreak/>
+                    <Run Foreground="#BB9AF7">while</Run> (<Run Foreground="#F7768E">not</Run> SOLUSI(S) <Run Foreground="#89DDFF">and</Run> C != {}) <Run Foreground="#BB9AF7">do</Run><LineBreak/>
+                    &#160;&#160;&#160;&#160;<Run Foreground="#565F89">// Kompleksitas O(n) di setiap langkah</Run><LineBreak/>
+                    &#160;&#160;&#160;&#160;x &lt;- SELEKSI(C) <Run Foreground="#565F89">// Cari kandidat terbaik</Run><LineBreak/>
+                    &#160;&#160;&#160;&#160;C &lt;- C - {x}<LineBreak/>
+                    &#160;&#160;&#160;&#160;<Run Foreground="#BB9AF7">if</Run> LAYAK(S U {x}) <Run Foreground="#BB9AF7">then</Run><LineBreak/>
+                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;S &lt;- S U {x}<LineBreak/>
+                    &#160;&#160;&#160;&#160;<Run Foreground="#BB9AF7">endif</Run><LineBreak/>
+                    <Run Foreground="#BB9AF7">endwhile</Run><LineBreak/>
+                    <Run Foreground="#BB9AF7">return</Run> S
+                </TextBlock>
+            </Border>
+
+            <Border Grid.Column="2" Background="#16161E" CornerRadius="10" Padding="15">
+                <TextBlock FontFamily="Consolas" Foreground="#A9B1D6" FontSize="13" TextWrapping="Wrap">
+                    <Run Foreground="#F7768E">function</Run> <Run Foreground="#7AA2F7">greedyOptimized</Run>(C : himpunan_kandidat)<LineBreak/>
+                    <Run Foreground="#565F89">// Array diurutkan di awal (Pre-sorting)</Run><LineBreak/>
+                    <Run Foreground="#7DCFFF">SortDescending</Run>(C) <Run Foreground="#565F89">// Kompleksitas O(n log n)</Run><LineBreak/>
+                    S &lt;- {}<LineBreak/>
+                    <Run Foreground="#BB9AF7">foreach</Run> x <Run Foreground="#89DDFF">in</Run> C <Run Foreground="#BB9AF7">do</Run><LineBreak/>
+                    &#160;&#160;&#160;&#160;<Run Foreground="#565F89">// Pengambilan kandidat langsung O(1)</Run><LineBreak/>
+                    &#160;&#160;&#160;&#160;<Run Foreground="#BB9AF7">if</Run> SOLUSI(S) <Run Foreground="#BB9AF7">then</Run> <Run Foreground="#BB9AF7">break</Run><LineBreak/>
+                    &#160;&#160;&#160;&#160;<Run Foreground="#BB9AF7">if</Run> LAYAK(S U {x}) <Run Foreground="#BB9AF7">then</Run><LineBreak/>
+                    &#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;S &lt;- S U {x}<LineBreak/>
+                    &#160;&#160;&#160;&#160;<Run Foreground="#BB9AF7">endif</Run><LineBreak/>
+                    <Run Foreground="#BB9AF7">endfor</Run><LineBreak/>
+                    <Run Foreground="#BB9AF7">return</Run> S
+                </TextBlock>
+            </Border>
+        </Grid>
+    </Grid>
+</Window>
