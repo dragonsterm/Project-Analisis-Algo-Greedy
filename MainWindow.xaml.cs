@@ -135,7 +135,7 @@ namespace GreedyVisualizer
             }
         }
 
-        // optimized reedy (pre sorting dengan QuickSort O(n log n))
+        // optimized Greedy (pre sorting dengan QuickSort O(n log n))
         private async Task RunOptimizedGreedy(ObservableCollection<ImageSlice> list, int left, int right, CancellationToken token)
         {
             if (left < right)
@@ -156,7 +156,7 @@ namespace GreedyVisualizer
             {
                 token.ThrowIfCancellationRequested();
                 
-                // Increment operasi dan Update UI
+                // Increment operasi dan update gui
                 _optimizedOpsCount++;
                 OptimizedCounterText.Text = $"Total Operasi: {_optimizedOpsCount}";
 
